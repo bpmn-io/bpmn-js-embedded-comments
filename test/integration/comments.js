@@ -51,7 +51,7 @@ describe('comments integration', function() {
 
         var text = overlay.html.text();
 
-        expect(text).to.contain('K (2)');
+        expect(text).to.contain('(2)');
         expect(text).to.contain('LINEBREAK');
         expect(text).to.contain('TEST');
 

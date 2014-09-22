@@ -43,7 +43,6 @@
   text-decoration: none;
 
   display: none;
-  font-size: 20px;
 }
 
 .comments-overlay .comment:hover .delete {

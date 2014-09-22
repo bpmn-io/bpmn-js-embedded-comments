@@ -1,0 +1,10 @@
+.icon-comment {
+  background: fuchsia;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+}
+
+.icon-delete {
+  content: '×'
+}
