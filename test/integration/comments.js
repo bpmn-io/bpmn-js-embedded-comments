@@ -80,7 +80,7 @@ describe('comments integration', function() {
 
       var elementRegistry = viewer.get('elementRegistry');
 
-      var subProcess = elementRegistry.getById('SubProcess_1');
+      var subProcess = elementRegistry.get('SubProcess_1');
 
       CommentsUtil.addComment(subProcess, '', 'This is a subprocess');
       CommentsUtil.addComment(subProcess, 'ME', 'This is another comment\n(with line breaks)');
