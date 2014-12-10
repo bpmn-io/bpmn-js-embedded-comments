@@ -34,14 +34,14 @@
     "karma-mocha": "^0.1.7",
     "chai": "^1.9.1",
     "karma-chai": "^0.1.0",
-    "bpmn-js": "^0.5.1",
-    "diagram-js": "^0.5.1"
+    "bpmn-js": "^0.6.0",
+    "diagram-js": "^0.6.0"
   },
   "browser": {
     "fs": false
   },
   "peerDependencies": {
-    "diagram-js": "^0.5.1"
+    "diagram-js": "^0.6.0"
   },
   "dependencies": {
     "jquery": "^2.1.0",
