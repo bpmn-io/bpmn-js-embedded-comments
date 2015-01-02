@@ -1,5 +1,5 @@
 // insert css
-require('../TestHelper');
+require('../test-helper');
 
 var fs = require('fs');
 
