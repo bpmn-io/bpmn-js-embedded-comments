@@ -88,12 +88,19 @@ describe('comments integration', function() {
       var expectedXML =
         '<bpmn2:subProcess id="SubProcess_1" name="Sub Process 1">' +
           '<bpmn2:documentation textFormat="text/x-comments">' +
+            '<![CDATA[' +
             ':This is a subprocess;\n' +
             ';ME:This is another comment\n' +
             '(with line breaks)' +
+            ']]>' +
           '</bpmn2:documentation>'; // ...
 
       viewer.saveXML(function(err, xml) {
+
+        if (err) {
+          return done(err);
+        }
+
         expect(xml).to.contain(expectedXML);
 
         done(err);
