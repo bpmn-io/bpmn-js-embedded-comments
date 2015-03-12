@@ -1,6 +1,6 @@
 {
   "name": "bpmn-js-embedded-comments",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "A simple comments extension for bpmn-js",
   "scripts": {
     "test": "grunt test"
