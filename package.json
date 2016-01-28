@@ -31,11 +31,12 @@
     "brfs": "^1.2.0",
     "jsondiffpatch": "^0.1.26",
     "mocha": "^1.21.4",
+    "mocha-test-container-support": "^0.1.0",
     "karma-mocha": "^0.1.7",
     "chai": "^1.9.1",
     "karma-chai": "^0.1.0",
-    "bpmn-js": "^0.9.0",
-    "diagram-js": "^0.9.0"
+    "bpmn-js": "^0.13.0",
+    "diagram-js": "^0.13.0"
   },
   "browser": {
     "fs": false
