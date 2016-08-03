@@ -35,6 +35,13 @@
   position: relative;
 }
 
+.comments-overlay .comment .author {
+  font-weight: bold;
+}
+.comments-overlay .comment .author::after {
+  content: ':';
+}
+
 .comments-overlay .comment .delete {
   position: absolute;
   right: 3px;

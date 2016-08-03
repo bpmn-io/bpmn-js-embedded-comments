@@ -19,6 +19,16 @@ author:comment;
 canbe multiline, too
 ```
 
+## How an author is set
+
+The current author can be set as follows
+
+```
+var Comments = require('bpmn-js-embedded-comments');
+
+Comments.author.setAuthor('My Name');
+```
+
 ## License
 
 MIT
