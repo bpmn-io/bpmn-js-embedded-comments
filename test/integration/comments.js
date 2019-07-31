@@ -25,9 +25,12 @@ describe('comments integration', function() {
   it('should open viewer with comments extension', function(done) {
 
     // given
-    var viewer = new Viewer({ container: container, additionalModules: [
-      commentsModule
-    ]});
+    var viewer = new Viewer({
+      container: container,
+      additionalModules: [
+        commentsModule
+      ]
+    });
 
     var xml = require('./fixtures/bpmn/simple-with-comments.bpmn');
 
@@ -59,9 +62,12 @@ describe('comments integration', function() {
   it('should serialize with new comment', function(done) {
 
     // given
-    var viewer = new Viewer({ container: container, additionalModules: [
-      commentsModule
-    ]});
+    var viewer = new Viewer({
+      container: container,
+      additionalModules: [
+        commentsModule
+      ]
+    });
 
     var xml = require('./fixtures/bpmn/simple.bpmn');
 
