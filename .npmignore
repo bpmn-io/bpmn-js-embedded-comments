@@ -1,0 +1,7 @@
+lib
+test
+!dist
+.eslintignore
+.eslintrc
+.travis.yml
+karma.conf.js
