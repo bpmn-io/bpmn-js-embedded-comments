@@ -1,15 +1,12 @@
-// insert css
-require('../test-helper');
+import '../test-helper';
 
-var fs = require('fs');
+import Viewer from 'bpmn-js/lib/Viewer';
 
+import commentsModule from '../../lib';
 
-var Viewer = require('bpmn-js/lib/Viewer');
-
-
-var commentsModule = require('../../');
-
-var CommentsUtil = require('../../lib/util');
+import {
+  addComment
+} from '../../lib/util';
 
 
 describe('comments integration', function() {
@@ -32,7 +29,7 @@ describe('comments integration', function() {
       commentsModule
     ]});
 
-    var xml = fs.readFileSync('test/fixtures/bpmn/simple-with-comments.bpmn', 'utf-8');
+    var xml = require('./fixtures/bpmn/simple-with-comments.bpmn');
 
 
     // when
@@ -66,7 +63,7 @@ describe('comments integration', function() {
       commentsModule
     ]});
 
-    var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf-8');
+    var xml = require('./fixtures/bpmn/simple.bpmn');
 
 
     // when
@@ -80,8 +77,8 @@ describe('comments integration', function() {
 
       var subProcess = elementRegistry.get('SubProcess_1');
 
-      CommentsUtil.addComment(subProcess, '', 'This is a subprocess');
-      CommentsUtil.addComment(subProcess, 'ME', 'This is another comment\n(with line breaks)');
+      addComment(subProcess, '', 'This is a subprocess');
+      addComment(subProcess, 'ME', 'This is another comment\n(with line breaks)');
 
       var expectedXML =
         '<bpmn2:subProcess id="SubProcess_1" name="Sub Process 1">' +

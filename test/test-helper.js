@@ -1,8 +1,10 @@
-var fs = require('fs');
+import {
+  insertCSS
+} from 'bpmn-js/test/helper';
 
-var TestHelper = module.exports = require('bpmn-js/test/helper');
+insertCSS('diagram-js.css', require('bpmn-js/dist/assets/diagram-js.css'));
+insertCSS('comments.css', require('../assets/comments.css'));
 
-TestHelper.insertCSS('diagram-js.css', fs.readFileSync('node_modules/diagram-js/assets/diagram-js.css', 'utf8'));
-TestHelper.insertCSS('comments.css', fs.readFileSync('assets/comments.css', 'utf8'));
+insertCSS('comments-test.css', require('./assets/comments-test.css'));
 
-TestHelper.insertCSS('comments-test.css', fs.readFileSync('test/assets/comments-test.css', 'utf8'));
+export * from 'bpmn-js/test/helper';
