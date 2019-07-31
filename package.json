@@ -42,7 +42,6 @@
     "fs": false
   },
   "dependencies": {
-    "jquery": "^2.1.0",
-    "lodash": "^3.0.0"
+    "jquery": "^2.1.0"
   }
 }

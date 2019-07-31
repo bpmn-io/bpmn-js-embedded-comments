@@ -7,8 +7,6 @@ var fs = require('fs');
 var Viewer = require('bpmn-js/lib/Viewer');
 
 
-var _ = require('lodash');
-
 var commentsModule = require('../../');
 
 var CommentsUtil = require('../../lib/util');
@@ -44,7 +42,7 @@ describe('comments integration', function() {
         return done(err);
       }
 
-      _.defer(function() {
+      defer(function() {
         var overlays = viewer.get('overlays');
 
         var overlay = overlays.get({ element: 'Task_1', type: 'comments' })[0];
@@ -109,3 +107,10 @@ describe('comments integration', function() {
   });
 
 });
+
+
+// helpers ///////////////
+
+function defer(fn) {
+  setTimeout(fn, 0);
+}
