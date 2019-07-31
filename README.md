@@ -1,6 +1,6 @@
-# Comments for bpmn-js
+# bpmn-js-embedded-comments
 
-This project adds the ability create comments on elements to [bpmn-js](https://github.com/bpmn-io/bpmn-js).
+An extension for [bpmn-js](https://github.com/bpmn-io/bpmn-js) that allows you to comment on a BPMN 2.0 diagram. Stores the comments within the BPMN 2.0 XML file.
 
 An integration of the plug-in into a bpmn-js powered process diagram viewer may look like this:
 
