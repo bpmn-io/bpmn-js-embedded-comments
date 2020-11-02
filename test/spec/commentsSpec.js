@@ -15,6 +15,7 @@ describe('comments integration', function() {
 
   beforeEach(function() {
     container = document.createElement('div');
+    container.classList.add('test-container');
     document.body.appendChild(container);
   });
 
