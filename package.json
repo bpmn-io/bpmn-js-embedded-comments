@@ -27,8 +27,8 @@
   "devDependencies": {
     "bpmn-js": "^10.2.1",
     "chai": "^4.3.6",
-    "eslint": "^5.16.0",
-    "eslint-plugin-bpmn-io": "^0.8.2",
+    "eslint": "^8.27.0",
+    "eslint-plugin-bpmn-io": "^0.16.0",
     "karma": "^6.4.1",
     "karma-chrome-launcher": "^3.1.1",
     "karma-mocha": "^2.0.1",

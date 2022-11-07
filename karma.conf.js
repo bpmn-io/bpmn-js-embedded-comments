@@ -1,9 +1,11 @@
+/* eslint-env node */
+
 // configures browsers to run test against
 // any of [ 'ChromeHeadless', 'Chrome', 'Firefox' ]
 const browsers =
   (process.env.TEST_BROWSERS || 'ChromeHeadless')
     .replace(/^\s+|\s+$/, '')
-    .split(/\s*,\s*/g)
+    .split(/\s*,\s*/g);
 
 const suite = 'test/suite.js';
 
