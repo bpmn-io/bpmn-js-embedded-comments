@@ -7,6 +7,10 @@ All notable changes to [bpmn-js-embedded-comments](https://github.com/bpmn-io/bp
 
 ___Note:__ Yet to be released changes appear here._
 
+## 0.7.0
+
+* `FEAT`: make extension translatable ([#8](https://github.com/bpmn-io/bpmn-js-embedded-comments/issues/8))
+
 ## ...
 
 Check `git log` for earlier releases.
