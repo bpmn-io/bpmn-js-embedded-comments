@@ -11,7 +11,7 @@ import {
 
 describe('comments integration', function() {
 
-  var container;
+  let container;
 
   beforeEach(function() {
     container = document.createElement('div');
@@ -23,89 +23,73 @@ describe('comments integration', function() {
   this.timeout(5000);
 
 
-  it('should open viewer with comments extension', function(done) {
+  it('should open viewer with comments extension', async function() {
 
     // given
-    var viewer = new Viewer({
+    const viewer = new Viewer({
       container: container,
       additionalModules: [
         commentsModule
       ]
     });
 
-    var xml = require('./simple-with-comments.bpmn');
+    const xml = require('./simple-with-comments.bpmn');
 
 
     // when
-    viewer.importXML(xml, function(err) {
+    await viewer.importXML(xml);
 
-      if (err) {
-        return done(err);
-      }
+    await defer();
 
-      defer(function() {
-        var overlays = viewer.get('overlays');
+    const overlays = viewer.get('overlays');
 
-        var overlay = overlays.get({ element: 'Task_1', type: 'comments' })[0];
+    const overlay = overlays.get({ element: 'Task_1', type: 'comments' })[0];
 
-        var text = overlay.html.text();
+    const text = overlay.html.text();
 
-        expect(text).to.contain('(2)');
-        expect(text).to.contain('LINEBREAK');
-        expect(text).to.contain('TEST');
-
-        done();
-      });
-    });
+    expect(text).to.contain('(2)');
+    expect(text).to.contain('LINEBREAK');
+    expect(text).to.contain('TEST');
   });
 
 
-  it('should serialize with new comment', function(done) {
+  it('should serialize with new comment', async function() {
 
     // given
-    var viewer = new Viewer({
+    const viewer = new Viewer({
       container: container,
       additionalModules: [
         commentsModule
       ]
     });
 
-    var xml = require('./simple.bpmn');
+    const xml = require('./simple.bpmn');
 
 
     // when
-    viewer.importXML(xml, function(err) {
+    await viewer.importXML(xml);
 
-      if (err) {
-        return done(err);
-      }
+    await defer();
 
-      var elementRegistry = viewer.get('elementRegistry');
+    const elementRegistry = viewer.get('elementRegistry');
 
-      var subProcess = elementRegistry.get('SubProcess_1');
+    const subProcess = elementRegistry.get('SubProcess_1');
 
-      addComment(subProcess, '', 'This is a subprocess');
-      addComment(subProcess, 'ME', 'This is another comment\n(with line breaks)');
+    addComment(subProcess, '', 'This is a subprocess');
+    addComment(subProcess, 'ME', 'This is another comment\n(with line breaks)');
 
-      var expectedXML =
-        '<bpmn2:subProcess id="SubProcess_1" name="Sub Process 1">' +
-          '<bpmn2:documentation textFormat="text/x-comments">' +
-            ':This is a subprocess;\n' +
-            ';ME:This is another comment\n' +
-            '(with line breaks)' +
-          '</bpmn2:documentation>'; // ...
+    const expectedXML =
+      '<bpmn2:subProcess id="SubProcess_1" name="Sub Process 1">' +
+        '<bpmn2:documentation textFormat="text/x-comments">' +
+          ':This is a subprocess;\n' +
+          ';ME:This is another comment\n' +
+          '(with line breaks)' +
+        '</bpmn2:documentation>'; // ...
 
-      viewer.saveXML(function(err, xml) {
+    const { xml: savedXML } = await viewer.saveXML();
 
-        if (err) {
-          return done(err);
-        }
+    expect(savedXML).to.contain(expectedXML);
 
-        expect(xml).to.contain(expectedXML);
-
-        done(err);
-      });
-    });
   });
 
 });
@@ -114,5 +98,7 @@ describe('comments integration', function() {
 // helpers ///////////////
 
 function defer(fn) {
-  setTimeout(fn, 0);
+  return new Promise(resolve => {
+    setTimeout(resolve, 0);
+  });
 }

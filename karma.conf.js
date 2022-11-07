@@ -1,20 +1,11 @@
-'use strict';
-
 // configures browsers to run test against
-// any of [ 'ChromeHeadless', 'Chrome', 'Firefox', 'IE', 'PhantomJS' ]
-var browsers =
+// any of [ 'ChromeHeadless', 'Chrome', 'Firefox' ]
+const browsers =
   (process.env.TEST_BROWSERS || 'ChromeHeadless')
     .replace(/^\s+|\s+$/, '')
     .split(/\s*,\s*/g)
-    .map(function(browser) {
-      if (browser === 'ChromeHeadless') {
-        process.env.CHROME_BIN = require('puppeteer').executablePath();
-      }
 
-      return browser;
-    });
-
-var suite = 'test/suite.js';
+const suite = 'test/suite.js';
 
 
 module.exports = function(karma) {
@@ -22,7 +13,8 @@ module.exports = function(karma) {
 
     frameworks: [
       'mocha',
-      'sinon-chai'
+      'sinon-chai',
+      'webpack'
     ],
 
     files: [
@@ -35,7 +27,7 @@ module.exports = function(karma) {
 
     reporters: [ 'progress' ],
 
-    browsers: browsers,
+    browsers,
 
     autoWatch: false,
     singleRun: true,
@@ -46,7 +38,7 @@ module.exports = function(karma) {
         rules: [
           {
             test: /\.(css|bpmn)$/,
-            use: 'raw-loader'
+            type: 'asset/source'
           }
         ]
       }
