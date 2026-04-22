@@ -94,9 +94,89 @@ describe('comments integration', function() {
 
   });
 
+	it('should expose comments API via DI', async function() {
+ 
+	 const viewer = new Viewer({
+		 container: container,
+		 additionalModules: [ commentsModule ]
+	 });
+ 
+	 const xml = require('./simple.bpmn');
+ 
+	 await viewer.importXML(xml);
+ 
+	 const comments = viewer.get('comments');
+	 const elementRegistry = viewer.get('elementRegistry');
+ 
+	 const task = elementRegistry.get('Task_1');
+ 
+	 comments.addComment(task, 'Drin', 'Hello');
+ 
+	 const result = comments.getComments(task);
+ 
+	 expect(result.length).to.equal(1);
+	 expect(result[0][1]).to.equal('Hello');
+ });
+ it('should fire comments.added event', async function() {
+ 
+	 const viewer = new Viewer({
+		 container: container,
+		 additionalModules: [ commentsModule ]
+	 });
+ 
+	 const xml = require('./simple.bpmn');
+ 
+	 await viewer.importXML(xml);
+ 
+	 const eventBus = viewer.get('eventBus');
+	 const comments = viewer.get('comments');
+	 const elementRegistry = viewer.get('elementRegistry');
+ 
+	 const task = elementRegistry.get('Task_1');
+ 
+	 let fired = false;
+ 
+	 eventBus.on('comments.added', function(e) {
+		 fired = true;
+		 expect(e.element).to.equal(task);
+	 });
+ 
+	 comments.addComment(task, 'Drin', 'Test');
+ 
+	 expect(fired).to.be.true;
+ });
+	it('should fire comments.removed event', async function() {
+ 
+	 const viewer = new Viewer({
+		 container: container,
+		 additionalModules: [ commentsModule ]
+	 });
+ 
+	 const xml = require('./simple.bpmn');
+ 
+	 await viewer.importXML(xml);
+ 
+	 const eventBus = viewer.get('eventBus');
+	 const comments = viewer.get('comments');
+	 const elementRegistry = viewer.get('elementRegistry');
+ 
+	 const task = elementRegistry.get('Task_1');
+ 
+	 comments.addComment(task, '', 'To delete');
+ 
+	 const existing = comments.getComments(task)[0];
+ 
+	 let fired = false;
+ 
+	 eventBus.on('comments.removed', function() {
+		 fired = true;
+	 });
+ 
+	 comments.removeComment(task, existing);
+ 
+	 expect(fired).to.be.true;
+ });
 });
-
-
 // helpers ///////////////
 
 function defer(fn) {
