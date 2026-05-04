@@ -94,8 +94,10 @@ describe('comments integration', function() {
 
   });
 
+
   it('should expose comments API via DI', async function() {
 
+    // given
     const viewer = new Viewer({
       container: container,
       additionalModules: [ commentsModule ]
@@ -110,16 +112,20 @@ describe('comments integration', function() {
 
     const task = elementRegistry.get('Task_1');
 
-    comments.addComment(task, 'Drin', 'Hello');
+    addComment(task, 'Drin', 'Hello');
 
+    // when
     const result = comments.getComments(task);
 
+    // then
     expect(result.length).to.equal(1);
     expect(result[0][1]).to.equal('Hello');
   });
 
+
   it('should fire comments.added event', async function() {
 
+    // given
     const viewer = new Viewer({
       container: container,
       additionalModules: [ commentsModule ]
@@ -142,13 +148,17 @@ describe('comments integration', function() {
       expect(e.element).to.equal(task);
     });
 
+    // when
     comments.addComment(task, 'Drin', 'Test');
 
+    // then
     expect(fired).to.be.true;
   });
 
+
   it('should fire comments.removed event', async function() {
 
+    // given
     const viewer = new Viewer({
       container: container,
       additionalModules: [ commentsModule ]
@@ -164,7 +174,7 @@ describe('comments integration', function() {
 
     const task = elementRegistry.get('Task_1');
 
-    comments.addComment(task, '', 'To delete');
+    addComment(task, '', 'To delete');
 
     const existing = comments.getComments(task)[0];
 
@@ -174,8 +184,10 @@ describe('comments integration', function() {
       fired = true;
     });
 
+    // when
     comments.removeComment(task, existing);
 
+    // then
     expect(fired).to.be.true;
   });
 });
