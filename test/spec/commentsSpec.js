@@ -1,3 +1,5 @@
+import { expect } from 'chai';
+
 import '../test-helper';
 
 import Viewer from 'bpmn-js/lib/Viewer';
