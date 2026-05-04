@@ -77,8 +77,8 @@ describe('comments integration', function() {
 
     const subProcess = elementRegistry.get('SubProcess_1');
 
-    addComment(subProcess, '', 'This is a subprocess');
-    addComment(subProcess, 'ME', 'This is another comment\n(with line breaks)');
+    addComment(subProcess, { author: '', text: 'This is a subprocess' });
+    addComment(subProcess, { author: 'ME', text: 'This is another comment\n(with line breaks)' });
 
     const expectedXML =
       '<bpmn2:subProcess id="SubProcess_1" name="Sub Process 1">' +
@@ -95,7 +95,7 @@ describe('comments integration', function() {
   });
 
 
-  it('should expose comments API via DI', async function() {
+  it('should expose comments API', async function() {
 
     // given
     const viewer = new Viewer({
@@ -112,84 +112,95 @@ describe('comments integration', function() {
 
     const task = elementRegistry.get('Task_1');
 
-    addComment(task, 'Drin', 'Hello');
+    comments.addComment(task, { author: 'Drin', text: 'Hello' });
 
     // when
     const result = comments.getComments(task);
 
     // then
-    expect(result.length).to.equal(1);
-    expect(result[0][1]).to.equal('Hello');
+    expect(result).to.eql([
+      { author: 'Drin', text: 'Hello' }
+    ]);
   });
 
 
-  it('should fire comments.added event', async function() {
+  describe('should emit events', function() {
 
-    // given
-    const viewer = new Viewer({
-      container: container,
-      additionalModules: [ commentsModule ]
+    it('<comments.added> on add', async function() {
+
+      // given
+      const viewer = new Viewer({
+        container: container,
+        additionalModules: [ commentsModule ]
+      });
+
+      const xml = require('./simple.bpmn');
+
+      await viewer.importXML(xml);
+
+      const eventBus = viewer.get('eventBus');
+      const comments = viewer.get('comments');
+      const elementRegistry = viewer.get('elementRegistry');
+
+      const task = elementRegistry.get('Task_1');
+
+      let fired = false;
+
+      eventBus.on('comments.added', function(event) {
+        fired = true;
+
+        expect(event.element).to.equal(task);
+        expect(event.comment).to.eql({ author: 'Drin', text: 'Test' });
+      });
+
+      // when
+      comments.addComment(task, { author: 'Drin', text: 'Test' });
+
+      // then
+      expect(fired).to.be.true;
     });
 
-    const xml = require('./simple.bpmn');
 
-    await viewer.importXML(xml);
+    it('<comments.removed> on removal', async function() {
 
-    const eventBus = viewer.get('eventBus');
-    const comments = viewer.get('comments');
-    const elementRegistry = viewer.get('elementRegistry');
+      // given
+      const viewer = new Viewer({
+        container: container,
+        additionalModules: [ commentsModule ]
+      });
 
-    const task = elementRegistry.get('Task_1');
+      const xml = require('./simple.bpmn');
 
-    let fired = false;
+      await viewer.importXML(xml);
 
-    eventBus.on('comments.added', function(e) {
-      fired = true;
-      expect(e.element).to.equal(task);
+      const eventBus = viewer.get('eventBus');
+      const comments = viewer.get('comments');
+      const elementRegistry = viewer.get('elementRegistry');
+
+      const task = elementRegistry.get('Task_1');
+
+      addComment(task, { author: '', text: 'To delete' });
+
+      const existing = comments.getComments(task)[0];
+
+      let fired = false;
+
+      eventBus.on('comments.removed', function(event) {
+        fired = true;
+
+        expect(event.element).to.eql(task);
+        expect(event.comment).to.eql({ author: '', text: 'To delete' });
+      });
+
+      // when
+      comments.removeComment(task, existing);
+
+      // then
+      expect(fired).to.be.true;
     });
 
-    // when
-    comments.addComment(task, 'Drin', 'Test');
-
-    // then
-    expect(fired).to.be.true;
   });
 
-
-  it('should fire comments.removed event', async function() {
-
-    // given
-    const viewer = new Viewer({
-      container: container,
-      additionalModules: [ commentsModule ]
-    });
-
-    const xml = require('./simple.bpmn');
-
-    await viewer.importXML(xml);
-
-    const eventBus = viewer.get('eventBus');
-    const comments = viewer.get('comments');
-    const elementRegistry = viewer.get('elementRegistry');
-
-    const task = elementRegistry.get('Task_1');
-
-    addComment(task, '', 'To delete');
-
-    const existing = comments.getComments(task)[0];
-
-    let fired = false;
-
-    eventBus.on('comments.removed', function() {
-      fired = true;
-    });
-
-    // when
-    comments.removeComment(task, existing);
-
-    // then
-    expect(fired).to.be.true;
-  });
 });
 
 // helpers ///////////////
