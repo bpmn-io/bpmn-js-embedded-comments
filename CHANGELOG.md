@@ -7,6 +7,10 @@ All notable changes to [bpmn-js-embedded-comments](https://github.com/bpmn-io/bp
 
 ___Note:__ Yet to be released changes appear here._
 
+## 0.9.0
+
+* `FEAT`: expose comments with `{ author, text }` shape ([#14](https://github.com/bpmn-io/bpmn-js-embedded-comments/pull/14))
+
 ## 0.8.0
 
 * `FEAT`: expose comments API and lifecycle events ([#12](https://github.com/bpmn-io/bpmn-js-embedded-comments/pull/12))
