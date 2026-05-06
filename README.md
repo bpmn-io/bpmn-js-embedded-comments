@@ -1,5 +1,7 @@
 # bpmn-js-embedded-comments
 
+[![CI](https://github.com/bpmn-io/bpmn-js-embedded-comments/actions/workflows/CI.yml/badge.svg)](https://github.com/bpmn-io/bpmn-js-embedded-comments/actions/workflows/CI.yml)
+
 An extension for [bpmn-js](https://github.com/bpmn-io/bpmn-js) that allows you to comment on a BPMN 2.0 diagram. 
 
 Stores the comments within the BPMN 2.0 XML file.
